@@ -29,8 +29,8 @@ ExamDetails::ExamDetails(const ExamDetails& exam_details)
     this->test_hour=exam_details.test_hour;
     this->link=exam_details.link;
 }
-/*
-ExamDetails& ExamDetails::operator=(const ExamDetails& exam_details)= default;
+
+/*ExamDetails& ExamDetails::operator=(const ExamDetails& exam_details)=default
 {
     this->length=exam_details.length;
     this->course_number=exam_details.course_number;
@@ -39,8 +39,8 @@ ExamDetails& ExamDetails::operator=(const ExamDetails& exam_details)= default;
     this->test_hour=exam_details.test_hour;
     this->link=exam_details.link;
     return *this;
-}
-*/
+}*/
+
 string ExamDetails::getLink()
 {
     return this->link;
