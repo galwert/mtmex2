@@ -6,7 +6,13 @@
 
 #IncludeRegexTransform: 
 
-/mnt/c/Users/galwe/OneDrive/Desktop/technion/mtm/hw/hw2/main.cpp
+/mnt/c/Users/galwe/OneDrive/Desktop/technion/mtm/hw/hw2/ExamDetails.cpp
+ExamDetails.h
+/mnt/c/Users/galwe/OneDrive/Desktop/technion/mtm/hw/hw2/ExamDetails.h
+
+/mnt/c/Users/galwe/OneDrive/Desktop/technion/mtm/hw/hw2/ExamDetails.h
 iostream
+-
+string
 -
 

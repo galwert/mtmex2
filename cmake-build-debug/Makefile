@@ -123,6 +123,33 @@ hw2/fast:
 	$(MAKE) -f CMakeFiles/hw2.dir/build.make CMakeFiles/hw2.dir/build
 .PHONY : hw2/fast
 
+ExamDetails.o: ExamDetails.cpp.o
+
+.PHONY : ExamDetails.o
+
+# target to build an object file
+ExamDetails.cpp.o:
+	$(MAKE) -f CMakeFiles/hw2.dir/build.make CMakeFiles/hw2.dir/ExamDetails.cpp.o
+.PHONY : ExamDetails.cpp.o
+
+ExamDetails.i: ExamDetails.cpp.i
+
+.PHONY : ExamDetails.i
+
+# target to preprocess a source file
+ExamDetails.cpp.i:
+	$(MAKE) -f CMakeFiles/hw2.dir/build.make CMakeFiles/hw2.dir/ExamDetails.cpp.i
+.PHONY : ExamDetails.cpp.i
+
+ExamDetails.s: ExamDetails.cpp.s
+
+.PHONY : ExamDetails.s
+
+# target to generate assembly for a file
+ExamDetails.cpp.s:
+	$(MAKE) -f CMakeFiles/hw2.dir/build.make CMakeFiles/hw2.dir/ExamDetails.cpp.s
+.PHONY : ExamDetails.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -159,6 +186,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... hw2"
+	@echo "... ExamDetails.o"
+	@echo "... ExamDetails.i"
+	@echo "... ExamDetails.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
