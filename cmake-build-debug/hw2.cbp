@@ -82,6 +82,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/mnt/c/Users/galwe/OneDrive/Desktop/technion/mtm/hw/hw2/ExamDetails.h">
+			<Option target="hw2"/>
+		</Unit>
 		<Unit filename="/mnt/c/Users/galwe/OneDrive/Desktop/technion/mtm/hw/hw2/main.cpp">
 			<Option target="hw2"/>
 		</Unit>
