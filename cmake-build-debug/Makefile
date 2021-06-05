@@ -150,6 +150,33 @@ ExamDetails.cpp.s:
 	$(MAKE) -f CMakeFiles/hw2.dir/build.make CMakeFiles/hw2.dir/ExamDetails.cpp.s
 .PHONY : ExamDetails.cpp.s
 
+SortedList.o: SortedList.cpp.o
+
+.PHONY : SortedList.o
+
+# target to build an object file
+SortedList.cpp.o:
+	$(MAKE) -f CMakeFiles/hw2.dir/build.make CMakeFiles/hw2.dir/SortedList.cpp.o
+.PHONY : SortedList.cpp.o
+
+SortedList.i: SortedList.cpp.i
+
+.PHONY : SortedList.i
+
+# target to preprocess a source file
+SortedList.cpp.i:
+	$(MAKE) -f CMakeFiles/hw2.dir/build.make CMakeFiles/hw2.dir/SortedList.cpp.i
+.PHONY : SortedList.cpp.i
+
+SortedList.s: SortedList.cpp.s
+
+.PHONY : SortedList.s
+
+# target to generate assembly for a file
+SortedList.cpp.s:
+	$(MAKE) -f CMakeFiles/hw2.dir/build.make CMakeFiles/hw2.dir/SortedList.cpp.s
+.PHONY : SortedList.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -189,6 +216,9 @@ help:
 	@echo "... ExamDetails.o"
 	@echo "... ExamDetails.i"
 	@echo "... ExamDetails.s"
+	@echo "... SortedList.o"
+	@echo "... SortedList.i"
+	@echo "... SortedList.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

@@ -5,6 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/mnt/c/Users/galwe/OneDrive/Desktop/technion/mtm/hw/hw2/ExamDetails.cpp" "/mnt/c/Users/galwe/OneDrive/Desktop/technion/mtm/hw/hw2/cmake-build-debug/CMakeFiles/hw2.dir/ExamDetails.cpp.o"
+  "/mnt/c/Users/galwe/OneDrive/Desktop/technion/mtm/hw/hw2/SortedList.cpp" "/mnt/c/Users/galwe/OneDrive/Desktop/technion/mtm/hw/hw2/cmake-build-debug/CMakeFiles/hw2.dir/SortedList.cpp.o"
   "/mnt/c/Users/galwe/OneDrive/Desktop/technion/mtm/hw/hw2/main.cpp" "/mnt/c/Users/galwe/OneDrive/Desktop/technion/mtm/hw/hw2/cmake-build-debug/CMakeFiles/hw2.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

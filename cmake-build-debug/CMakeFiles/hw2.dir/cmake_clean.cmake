@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/hw2.dir/ExamDetails.cpp.o"
+  "CMakeFiles/hw2.dir/SortedList.cpp.o"
   "CMakeFiles/hw2.dir/main.cpp.o"
   "hw2"
   "hw2.pdb"

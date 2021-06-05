@@ -3,4 +3,4 @@ project(hw2)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(hw2 main.cpp ExamDetails.h ExamDetails.cpp)
+add_executable(hw2 main.cpp ExamDetails.h ExamDetails.cpp SortedList.h SortedList.cpp)
