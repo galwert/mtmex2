@@ -4,5 +4,6 @@
 CMakeFiles/hw2.dir/ExamDetails.cpp.o: ../ExamDetails.cpp
 CMakeFiles/hw2.dir/ExamDetails.cpp.o: ../ExamDetails.h
 
+CMakeFiles/hw2.dir/main.cpp.o: ../ExamDetails.h
 CMakeFiles/hw2.dir/main.cpp.o: ../main.cpp
 

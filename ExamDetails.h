@@ -17,14 +17,14 @@ private:
     string link;
 public:
     ExamDetails(int course_number, int test_month, int test_day,
-                double test_hour,int length, string& link);
+                double test_hour,int length, string&& link=string());
     ~ExamDetails()=default;
     ExamDetails(const ExamDetails& exam_details);
     ExamDetails& operator=(const ExamDetails& exam_details)=default;
     string getLink();
-    bool operator<
+    bool operator<(const ExamDetails& exam_details) const;
     void setLink(string& link1);
-    friend int operator-(const ExamDetails& exam_details1, const ExamDetails& exam_details2);
+    int operator-(const ExamDetails& exam_details) const;
     friend std::ostream& operator<<(std::ostream& os, const ExamDetails& c);
     static ExamDetails makeMatamExam();
 };
