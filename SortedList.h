@@ -17,11 +17,6 @@ class SortedList
         T data;
         class node_t *next;
 
-        node_t(T insert_data, node_t next_node)
-        {
-            data = insert_data;
-            next = next_node;
-        }
     } *Node;
 
 public:
@@ -33,13 +28,13 @@ public:
     private:
         const_iterator()
         {
-            Node current_node = head;
+            Node current_node = NULL;
         }
 
     public:
         const_iterator(const SortedList<T>::const_iterator &iterator_to_copy)
         {
-           current_node = iterator_to_copy.current_node;
+            current_node = iterator_to_copy.current_node;
         }
 
         ~const_iterator()
@@ -75,15 +70,15 @@ public:
         }
     };
 
-private:
     Node head;
     int size;
+    const_iterator iterator;
 
-public:
     SortedList()
     {
         head = NULL;
         size = 0;
+        iterator.current_node = head;
     }
 
     ~SortedList()
@@ -132,7 +127,8 @@ public:
             head = NULL;
         }
         SortedList<T> new_list = copyParameters(list);
-        return &new_list;
+        new_list.iterator = list.iterator;
+        return new_list;
     }
 
     SortedList<T> copyParameters(const SortedList<T> &list)
@@ -168,7 +164,7 @@ public:
             runner = runner->next;
         }
 
-        Node new_node (new_data, runner->next);
+        Node new_node = new Node();
         runner->next = new_node;
 
         size = size + 1;
@@ -236,7 +232,7 @@ public:
         SortedList<T> new_list = SortedList<T>();
         if(size == 0)
         {
-            return *new_list;
+            return &new_list;
         }
 
         Node new_node = new Node();
@@ -244,7 +240,7 @@ public:
 
         while(current_node != NULL)
         {
-            new_node->data = function(current_node);
+            new_node->data = function(current_node->data);
             Node next_node = new Node();
             new_node->next = next_node;
             current_node = current_node->next;
@@ -254,25 +250,25 @@ public:
                 delete(next_node);
             }
         }
-        return *new_list;
+        return &new_list;
     }
 
-    const_iterator& begin()
+    const_iterator begin()
     {
-        const_iterator new_iterator = new const_iterator();
-        return *new_iterator;
+        iterator.current_node = head;
+        return iterator;
     }
 
-    const_iterator& end()
+    const_iterator end()
     {
-        const_iterator new_iterator();
-        Node current_node = head;
-        while(current_node->next != NULL)
+        Node runner = head;
+        while(runner->next != NULL)
         {
-            current_node = current_node->next;
+            runner = runner->next;
         }
-        new_iterator.current_node = current_node;
-        return new_iterator;
+
+        iterator = runner;
+        return iterator;
     }
 };
 
