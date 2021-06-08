@@ -5,21 +5,32 @@
 #include <string>
 #include "stdlib.h"
 
+const string OUT_OF_RANGE_ERROR = "End of list";
+
 template <class T>
 
 class SortedList
 {
     typedef class node_t
     {
-        T data = NULL;
-        class node_t *next = NULL;
+    public:
+        T data;
+        class node_t *next;
+
+        node_t(T insert_data, node_t next_node)
+        {
+            data = insert_data;
+            next = next_node;
+        }
     } *Node;
 
+public:
     class const_iterator
     {
-    private:
+    public:
         Node current_node;
 
+    private:
         const_iterator()
         {
             Node current_node = head;
@@ -28,7 +39,7 @@ class SortedList
     public:
         const_iterator(const SortedList<T>::const_iterator &iterator_to_copy)
         {
-            iterator.current_node = iterator_to_copy.current_node;
+           current_node = iterator_to_copy.current_node;
         }
 
         ~const_iterator()
@@ -38,42 +49,41 @@ class SortedList
 
         const_iterator& operator=(const const_iterator &iterator_to_assign)
         {
-            iterator.current_node = iterator_to_assign.current_node;
+            current_node = iterator_to_assign.current_node;
             return *this;
         }
 
         void operator++ ()
         {
-            if(iterator.current_node->next == NULL)
+            if(current_node->next == NULL)
             {
-                throw (std::out_of_range);
+                throw std::out_of_range(OUT_OF_RANGE_ERROR);
             }
-            iterator.current_node = iterator.current_node->next;
+
+            current_node = current_node->next;
         }
 
         bool operator== (const const_iterator& iterator1) const
         {
-            return iterator.current_node == iterator1.current_node;
+            return current_node == iterator1.current_node;
         }
 
-        const const_iterator& operator* ()
+        const T& operator* ()
         {
-            SortedList<T>::const_iterator iterator_data = *iterator.current_node;
-            return iterator_data;
+            T iterator_data = *current_node;
+            return *iterator_data;
         }
     };
 
 private:
     Node head;
     int size;
-    const_iterator iterator;
 
 public:
     SortedList()
     {
         head = NULL;
         size = 0;
-        iterator = head;
     }
 
     ~SortedList()
@@ -83,11 +93,11 @@ public:
             delete(head);
         }
         else if(size > 1) {
-            Node iterator = head->next;
+            Node current_node = head->next;
             Node to_delete = head;
-            while (iterator != NULL)
+            while (current_node != NULL)
             {
-                iterator = iterator->next;
+                current_node = current_node->next;
                 delete (to_delete);
             }
             delete(to_delete);
@@ -101,8 +111,28 @@ public:
 
     SortedList<T>& operator= (const SortedList<T> &list)
     {
-        copyParameters(list);
-        return *this;
+        if(this == &list)
+        {
+            return *this;
+        }
+        if(size > 1)
+        {
+            Node to_delete = head;
+            Node current_node = head->next;
+            while (current_node != NULL)
+            {
+                to_delete = current_node;
+                current_node = current_node->next;
+                delete (to_delete);
+            }
+            head = NULL;
+        } else if(size == 1)
+        {
+            delete(head);
+            head = NULL;
+        }
+        SortedList<T> new_list = copyParameters(list);
+        return &new_list;
     }
 
     SortedList<T> copyParameters(const SortedList<T> &list)
@@ -126,9 +156,11 @@ public:
         }
         new_node->data = current_node->data;
         new_node->next = NULL;
+
+        return *this;
     }
 
-    void insert(T new_data) const
+    void insert(const T new_data)
     {
         Node runner = head;
         while(runner->next->data < new_data)
@@ -136,24 +168,21 @@ public:
             runner = runner->next;
         }
 
-        Node new_node = new Node();
-        new_node->data = *new_data;
-        new_node->next = runner->next;
-
+        Node new_node (new_data, runner->next);
         runner->next = new_node;
 
         size = size + 1;
     }
 
-    void remove(T iterator) const
+    void remove(const_iterator iterator) const
     {
-        if(iterator == head->data)
+        if(iterator.current_node->data == head->data)
         {
             delete(head);
             head = NULL;
         }
         Node current_node = head;
-        while(current_node->next->data != iterator)
+        while(current_node->next->data != iterator.current_node->data)
         {
             current_node = current_node->next;
         }
@@ -201,13 +230,13 @@ public:
     }
 
     template <class Function>
-    SortedList<T>& apply(SortedList<T> Function) const
+    SortedList<T>& apply(Function function) const
     {
         Node current_node = head;
         SortedList<T> new_list = SortedList<T>();
         if(size == 0)
         {
-            return new_list;
+            return *new_list;
         }
 
         Node new_node = new Node();
@@ -215,7 +244,7 @@ public:
 
         while(current_node != NULL)
         {
-            new_node->data = Function(current_node);
+            new_node->data = function(current_node);
             Node next_node = new Node();
             new_node->next = next_node;
             current_node = current_node->next;
@@ -225,21 +254,25 @@ public:
                 delete(next_node);
             }
         }
-        return new_list;
+        return *new_list;
     }
 
-    void begin(const_iterator iterator)
+    const_iterator& begin()
     {
-        iterator.current_node = head;
+        const_iterator new_iterator = new const_iterator();
+        return *new_iterator;
     }
 
-    void end(const_iterator iterator)
+    const_iterator& end()
     {
-        iterator = head;
-        while(iterator.current_node->next != NULL)
+        const_iterator new_iterator();
+        Node current_node = head;
+        while(current_node->next != NULL)
         {
-            iterator.current_node = iterator.current_node->next;
+            current_node = current_node->next;
         }
+        new_iterator.current_node = current_node;
+        return new_iterator;
     }
 };
 
