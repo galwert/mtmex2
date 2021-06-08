@@ -63,22 +63,19 @@ public:
             return current_node == iterator1.current_node;
         }
 
-        const T& operator* ()
+        const Node& operator* ()
         {
-            T iterator_data = *current_node;
-            return *iterator_data;
+            return current_node;
         }
     };
 
     Node head;
     int size;
-    const_iterator iterator;
 
     SortedList()
     {
         head = NULL;
         size = 0;
-        iterator.current_node = head;
     }
 
     ~SortedList()
@@ -140,13 +137,13 @@ public:
             return *this;
         }
 
-        Node new_node = new Node();
+        Node new_node;
         Node current_node = list.head;
         head = new_node;
         for(int i = 0; i < size-1; i++)
         {
             new_node->data = current_node->data;
-            Node next_node = new Node();
+            Node next_node;
             new_node->next = next_node;
             new_node = new_node->next;
         }
@@ -164,7 +161,9 @@ public:
             runner = runner->next;
         }
 
-        Node new_node = new Node();
+        Node new_node;
+        new_node->data = new_data;
+        new_node->next = runner->next;
         runner->next = new_node;
 
         size = size + 1;
@@ -255,19 +254,17 @@ public:
 
     const_iterator begin()
     {
-        iterator.current_node = head;
-        return iterator;
+        return const_iterator(*this);
     }
 
     const_iterator end()
     {
+        const_iterator iterator = begin();
         Node runner = head;
-        while(runner->next != NULL)
+        while(iterator.current_node->next != NULL)
         {
-            runner = runner->next;
+            iterator.current_node = iterator.current_node->next;
         }
-
-        iterator = runner;
         return iterator;
     }
 };
