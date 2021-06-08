@@ -36,7 +36,7 @@ class SortedList
             return;
         }
 
-        const_iterator& const_iterator::operator=(const const_iterator() &iter_to_assign)
+        const_iterator& operator=(const const_iterator &iterator_to_assign)
         {
             iterator.current_node = iterator_to_assign.current_node;
             return *this;
@@ -46,7 +46,7 @@ class SortedList
         {
             if(iterator.current_node->next == NULL)
             {
-                throw std::out_of_range;
+                throw (std::out_of_range);
             }
             iterator.current_node = iterator.current_node->next;
         }
@@ -56,7 +56,7 @@ class SortedList
             return iterator.current_node == iterator1.current_node;
         }
 
-        const const_iterator& SortedList<T>::const_iterator::operator* ()
+        const const_iterator& operator* ()
         {
             SortedList<T>::const_iterator iterator_data = *iterator.current_node;
             return iterator_data;
