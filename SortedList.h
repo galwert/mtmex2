@@ -16,7 +16,7 @@ class SortedList
         T data;
         class node_t *next;
 
-        node_t();
+        node_t(const T& data);
 
     } *Node;
 
@@ -62,7 +62,7 @@ public:
 };
 
 template<class T>
-SortedList<T>::node_t::node_t() : data(NULL), next(NULL)
+SortedList<T>::node_t::node_t(const T& data) : data(data), next(NULL)
 {
 }
 
@@ -210,9 +210,8 @@ void SortedList<T>::operator= (const SortedList<T> &list)
 template<class T>
 void SortedList<T>::insert(const T new_data)
 {
-    Node new_node = Node();
-    new_node->data = new_data;
-
+    Node new_node = Node(&new_data);
+    new_node->next = NULL;
     if(size == 0)
     {
         head = new_node;
@@ -226,18 +225,30 @@ void SortedList<T>::insert(const T new_data)
         else
         {
             new_node->next = head;
-            head->next = new_node;
+            head = new_node;
         }
     }
     else
     {
+        bool last_item = false;
         Node runner = head;
-        while (runner->next->data < new_data)
+        while (runner->next && (runner->next->data < new_data))
         {
+            if(runner->next == NULL)
+            {
+                last_item = true;
+            }
             runner = runner->next;
         }
+        if(last_item)
+        {
+            new_node->next = NULL;
+        }
+        else
+        {
+            new_node->next = runner->next;
+        }
 
-        new_node->next = runner->next;
         runner->next = new_node;
     }
 
@@ -284,8 +295,7 @@ SortedList<T>& SortedList<T>::filter(Condition condition) const
     {
         if (condition(current_node->data))
         {
-            new_node = Node();
-            new_node->data = current_node->data;
+            new_node = Node(current_node->data);
             next_node = Node();
             new_node->next = next_node;
         }
