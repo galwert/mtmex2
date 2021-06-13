@@ -14,63 +14,32 @@ class SortedList
     {
     public:
         T data;
-
         class node_t *next;
 
     } *Node;
 
 public:
+    Node head;
+    int size;
+
     class const_iterator
     {
+        friend class SortedList<T>;
+
     public:
         Node current_node;
 
     private:
-        const_iterator()
-        {
-            Node current_node = NULL;
-        }
+        const_iterator();
+        const_iterator(const SortedList<T>::Node node_to_be_head);
 
     public:
-        const_iterator(const SortedList<T>::const_iterator &iterator_to_copy)
-        {
-            current_node = iterator_to_copy.current_node;
-        }
-
-        ~const_iterator()
-        {
-            return;
-        }
-
-        const_iterator& operator= (const const_iterator &iterator_to_assign)
-        {
-            current_node = iterator_to_assign.current_node;
-            return *this;
-        }
-
-        void operator++()
-        {
-            if (current_node->next == NULL)
-            {
-                throw std::out_of_range(OUT_OF_RANGE_ERROR);
-            }
-
-            current_node = current_node->next;
-        }
-
-        bool operator==(const const_iterator &iterator1) const
-        {
-            return current_node == iterator1.current_node;
-        }
-
-        const Node &operator*()
-        {
-            return current_node;
-        }
+        const_iterator(const SortedList<T>::const_iterator &iterator_to_copy);
+        const_iterator& operator= (const const_iterator &iterator_to_assign);
+        void operator++();
+        bool operator==(const const_iterator &iterator1) const;
+        const Node& operator*();
     };
-
-    Node head;
-    int size;
 
     SortedList();
     ~SortedList();
@@ -92,10 +61,55 @@ public:
 };
 
 template<class T>
-SortedList<T>::SortedList()
+SortedList<T>::const_iterator::const_iterator() : current_node(NULL)
 {
-    head = NULL;
-    size = 0;
+}
+
+template<class T>
+SortedList<T>::const_iterator::const_iterator(const SortedList<T>::Node node_to_be_head) : current_node(node_to_be_head)
+{
+}
+
+template<class T>
+SortedList<T>::const_iterator::const_iterator(const SortedList<T>::const_iterator &iterator_to_copy) :
+    current_node(iterator_to_copy.current_node)
+{
+}
+
+template<class T>
+typename SortedList<T>::const_iterator&
+                SortedList<T>::const_iterator::operator= (const const_iterator &iterator_to_assign)
+{
+    current_node = iterator_to_assign.current_node;
+    return *this;
+}
+
+template<class T>
+void SortedList<T>::const_iterator::operator++()
+{
+    if (current_node->next == NULL)
+    {
+        throw std::out_of_range(OUT_OF_RANGE_ERROR);
+    }
+
+    current_node = current_node->next;
+}
+
+template<class T>
+bool SortedList<T>::const_iterator::operator==(const const_iterator &iterator1) const
+{
+    return current_node == iterator1.current_node;
+}
+
+template<class T>
+const typename SortedList<T>::Node& SortedList<T>::const_iterator::operator*()
+{
+    return current_node;
+}
+
+template<class T>
+SortedList<T>::SortedList() : head(NULL), size(0)
+{
 }
 
 template<class T>
@@ -148,7 +162,7 @@ SortedList<T>& SortedList<T>::operator= (const SortedList<T> &list)
     }
     SortedList<T> new_list = copyParameters(list);
     new_list.iterator = list.iterator;
-    return new_list;
+    return &new_list;
 }
 
 template<class T>
@@ -282,13 +296,13 @@ SortedList<T>& SortedList<T>::apply(Function function) const
 }
 
 template<class T>
-SortedList<T>::const_iterator SortedList<T>::begin()
+typename SortedList<T>::const_iterator SortedList<T>::begin()
 {
-    return const_iterator(*this);
+    return const_iterator();
 }
 
 template<class T>
-SortedList<T>::const_iterator SortedList<T>::end()
+typename SortedList<T>::const_iterator SortedList<T>::end()
 {
     const_iterator iterator = begin();
     Node runner = head;
