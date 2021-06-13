@@ -45,7 +45,6 @@ public:
     ~SortedList();
     SortedList(const SortedList<T> &list);
     SortedList<T>& operator= (const SortedList<T> &list);
-    SortedList<T> copyParameters(const SortedList<T> &list);
     void insert(const T new_data);
     void remove(const_iterator iterator) const;
     int length();
@@ -54,7 +53,7 @@ public:
     SortedList<T>& filter(Condition condition) const;
 
     template <class Function>
-    SortedList<T>& apply(Function function) const;
+    SortedList<T> apply(Function function) const;
 
     const_iterator begin();
     const_iterator end();
@@ -132,9 +131,27 @@ SortedList<T>::~SortedList()
 }
 
 template<class T>
-SortedList<T>::SortedList(const SortedList<T> &list)
-{
-    copyParameters(list);
+SortedList<T>::SortedList(const SortedList<T>& list)
+{ // !!!
+    size = list.size;
+    if(size == 0)
+    {
+        head = NULL;
+        return;
+    }
+
+    Node new_node;
+    Node current_node = list.head;
+    head = new_node;
+    for(int i = 0; i < size-1; i++)
+    {
+        new_node->data = current_node->data;
+        Node next_node;
+        new_node->next = next_node;
+        new_node = new_node->next;
+    }
+    new_node->data = current_node->data;
+    new_node->next = NULL;
 }
 
 template<class T>
@@ -155,21 +172,16 @@ SortedList<T>& SortedList<T>::operator= (const SortedList<T> &list)
             delete (to_delete);
         }
         head = NULL;
-    } else if(size == 1)
+    }
+    else if(size == 1)
     {
         delete(head);
         head = NULL;
     }
-    SortedList<T> new_list = copyParameters(list);
-    new_list.iterator = list.iterator;
-    return &new_list;
-}
+    SortedList<T>& new_list;
 
-template<class T>
-SortedList<T> SortedList<T>::copyParameters(const SortedList<T> &list)
-{
-    size = list.size;
-    if(size == 0)
+    new_list.size = list.size;
+    if(new_list.size == 0)
     {
         head = NULL;
         return *this;
@@ -177,7 +189,7 @@ SortedList<T> SortedList<T>::copyParameters(const SortedList<T> &list)
 
     Node new_node;
     Node current_node = list.head;
-    head = new_node;
+    new_list.head = new_node;
     for(int i = 0; i < size-1; i++)
     {
         new_node->data = current_node->data;
@@ -188,7 +200,7 @@ SortedList<T> SortedList<T>::copyParameters(const SortedList<T> &list)
     new_node->data = current_node->data;
     new_node->next = NULL;
 
-    return *this;
+    return new_list;
 }
 
 template<class T>
@@ -268,22 +280,22 @@ SortedList<T>& SortedList<T>::filter(Condition condition) const
 
 template<class T>
 template <class Function>
-SortedList<T>& SortedList<T>::apply(Function function) const
+SortedList<T> SortedList<T>::apply(Function function) const
 {
     Node current_node = head;
-    SortedList<T> new_list = SortedList<T>();
+    SortedList<T> new_list;
     if(size == 0)
     {
-        return &new_list;
+        return new_list;
     }
 
-    Node new_node = new Node();
+    Node new_node;
     new_list.head = new_node;
 
     while(current_node != NULL)
     {
         new_node->data = function(current_node->data);
-        Node next_node = new Node();
+        Node next_node;
         new_node->next = next_node;
         current_node = current_node->next;
         next_node = new_node->next;
@@ -292,7 +304,7 @@ SortedList<T>& SortedList<T>::apply(Function function) const
             delete(next_node);
         }
     }
-    return &new_list;
+    return new_list;
 }
 
 template<class T>
