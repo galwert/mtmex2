@@ -67,7 +67,7 @@ SortedList<T>::node_t::node_t() : data(NULL), next(NULL)
 }
 
 template<class T>
-SortedList<T>::const_iterator::const_iterator() : current_node(NULL)
+SortedList<T>::const_iterator::const_iterator() : current_node(head)
 {
 }
 
@@ -333,14 +333,13 @@ SortedList<T> SortedList<T>::apply(Function function) const
 template<class T>
 typename SortedList<T>::const_iterator SortedList<T>::begin()
 {
-    return const_iterator();
+    return const_iterator(head);
 }
 
 template<class T>
 typename SortedList<T>::const_iterator SortedList<T>::end()
 {
     const_iterator iterator = begin();
-    Node runner = head;
     while(iterator.current_node->next != NULL)
     {
         iterator.current_node = iterator.current_node->next;
