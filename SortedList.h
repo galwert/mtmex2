@@ -121,14 +121,27 @@ SortedList<T>::SortedList() : head(nullptr), size(0)
 template<class T>
 SortedList<T>::~SortedList()
 {
-    const_iterator iterator = begin();
-
-    while(!(iterator.current_node->next == nullptr))
+    if(size == 0)
     {
-        remove(iterator);
-        ++iterator;
+        return;
     }
-    remove(iterator);
+
+    if(size == 1)
+    {
+        delete(head);
+        return;
+    }
+
+    Node current_node = head->next;
+    Node node_before = head;
+    while(current_node != nullptr)
+    {
+        delete(node_before);
+        node_before = current_node;
+        current_node = current_node->next;
+    }
+
+    delete(node_before);
 }
 
 template<class T>
@@ -166,6 +179,7 @@ void SortedList<T>::operator= (const SortedList<T> &list)
             to_delete = current_node;
             current_node = current_node->next;
         }
+        delete(to_delete);
         head = nullptr;
     }
     else if(size == 1)
