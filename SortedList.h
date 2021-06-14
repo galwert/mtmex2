@@ -48,7 +48,7 @@ public:
     SortedList(const SortedList<T> &list);
     void operator= (const SortedList<T> &list);
     void insert(const T& new_data);
-    void remove(const_iterator iterator);
+    void remove(typename SortedList<T>::const_iterator iterator);
     int length();
 
     template <class Condition>
@@ -93,7 +93,7 @@ typename SortedList<T>::const_iterator&
 template<class T>
 void SortedList<T>::const_iterator::operator++()
 {
-    if (current_node->next == nullptr)
+    if (current_node == nullptr)
     {
         throw std::out_of_range(OUT_OF_RANGE_ERROR);
     }
@@ -123,18 +123,19 @@ SortedList<T>::~SortedList()
 {
     const_iterator iterator = begin();
 
-    while(!(iterator == nullptr))
+    while(!(iterator.current_node->next == nullptr))
     {
         remove(iterator);
         ++iterator;
     }
+    remove(iterator);
 }
 
 template<class T>
 SortedList<T>::SortedList(const SortedList<T>& list)
 {
-    size = list.size;
-    if(size == 0)
+    size = 0;
+    if(list.size == 0)
     {
         head = nullptr;
         return;
@@ -242,7 +243,7 @@ void SortedList<T>::insert(const T& new_data)
 }
 
 template<class T>
-void SortedList<T>::remove(const_iterator iterator)
+void SortedList<T>::remove(typename SortedList<T>::const_iterator iterator)
 {
     if(size == 0)
     {
@@ -257,7 +258,45 @@ void SortedList<T>::remove(const_iterator iterator)
     }
     else
     {
+        Node current_node = head->next;
+        Node node_before = head;
 
+        if(head->data == iterator.current_node->data)
+        {
+            Node to_delete = head;
+            head = head->next;
+            delete(to_delete);
+            size = size - 1;
+            return;
+        }
+
+        while(current_node->next && !(current_node->next->data == iterator.current_node->data))
+        {
+            current_node = current_node->next;
+            node_before = node_before->next;
+        }
+
+        if(current_node->next == nullptr)
+        {
+            if(!(current_node->data == iterator.current_node->data))
+            {
+                return;
+            }
+            else
+            {
+                delete(current_node);
+                node_before->next = nullptr;
+                size = size - 1;
+                return;
+            }
+        }
+
+        Node to_delete = current_node;
+
+        node_before->next = current_node->next;
+
+        delete(to_delete);
+        size = size - 1;
     }
 }
 
@@ -330,7 +369,7 @@ template<class T>
 typename SortedList<T>::const_iterator SortedList<T>::end()
 {
     const_iterator iterator = begin();
-    while(iterator.current_node->next != nullptr)
+    while(iterator.current_node != nullptr)
     {
         iterator.current_node = iterator.current_node->next;
     }
