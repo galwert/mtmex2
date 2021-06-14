@@ -261,7 +261,7 @@ void SortedList<T>::remove(typename SortedList<T>::const_iterator iterator)
         Node current_node = head->next;
         Node node_before = head;
 
-        if(head->data == iterator.current_node->data)
+        if(iterator.current_node == head)
         {
             Node to_delete = head;
             head = head->next;
@@ -270,7 +270,7 @@ void SortedList<T>::remove(typename SortedList<T>::const_iterator iterator)
             return;
         }
 
-        while(current_node->next && !(current_node->next->data == iterator.current_node->data))
+        while(current_node->next && !(current_node == iterator.current_node))
         {
             current_node = current_node->next;
             node_before = node_before->next;
@@ -278,7 +278,7 @@ void SortedList<T>::remove(typename SortedList<T>::const_iterator iterator)
 
         if(current_node->next == nullptr)
         {
-            if(!(current_node->data == iterator.current_node->data))
+            if(!(current_node == iterator.current_node))
             {
                 return;
             }
@@ -345,6 +345,7 @@ SortedList<T> SortedList<T>::apply(Function function) const
 {
     Node current_node = head;
     SortedList<T> new_list;
+    new_list.size = 0;
     if(size == 0)
     {
         return new_list;
