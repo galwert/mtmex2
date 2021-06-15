@@ -334,24 +334,14 @@ namespace mtm
         {
             return new_list;
         }
-        Node new_node;
-        Node next_node;
-        new_list.head = new_node;
+
         while(current_node != nullptr)
         {
-            if (condition(current_node->data))
+            if(condition(current_node->data))
             {
-                new_node = new node_t(current_node->data);
-                next_node = Node();
-                new_node->next = next_node;
+                new_list.insert(current_node->data);
             }
             current_node = current_node->next;
-            new_node = new_node->next;
-        } // List is already sorted so new list has to be sorted too
-
-        if(next_node != nullptr)
-        {
-            delete(next_node);
         }
 
         return new_list;
