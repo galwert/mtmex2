@@ -46,7 +46,7 @@ public:
     SortedList();
     ~SortedList();
     SortedList(const SortedList<T> &list);
-    void operator= (const SortedList<T> &list);
+    SortedList<T>& operator= (const SortedList<T> &list);
     void insert(const T& new_data);
     void remove(typename SortedList<T>::const_iterator iterator);
     int length();
@@ -163,11 +163,11 @@ SortedList<T>::SortedList(const SortedList<T>& list)
 }
 
 template<class T>
-void SortedList<T>::operator= (const SortedList<T> &list)
+SortedList<T>& SortedList<T>::operator= (const SortedList<T> &list)
 {
     if(this == &list)
     {
-        return;
+        return *this;
     }
     if(size > 1)
     {
@@ -192,7 +192,7 @@ void SortedList<T>::operator= (const SortedList<T> &list)
     if(list.size == 0)
     {
         head = nullptr;
-        return;
+        return *this;
     }
 
     Node current_node = list.head;
@@ -201,6 +201,8 @@ void SortedList<T>::operator= (const SortedList<T> &list)
         insert(current_node->data);
         current_node = current_node->next;
     }
+
+    return *this;
 }
 
 template<class T>
@@ -320,12 +322,12 @@ int SortedList<T>::length()
     return size;
 }
 
-template<class T>
+template <class T>
 template <class Condition>
 SortedList<T>& SortedList<T>::filter(Condition condition) const
 {
     Node current_node = head;
-    SortedList<T> new_list = SortedList<T>();
+    SortedList<T>& new_list = SortedList<T>();
     if(size == 0)
     {
         return new_list;
