@@ -36,7 +36,7 @@ namespace mtm
 
         int operator-(const ExamDetails &exam_details) const;
 
-        friend std::ostream &operator<<(std::ostream &os, const ExamDetails &c);
+        friend std::ostream &operator<<(std::ostream &os, const ExamDetails &exam_details);
 
         static ExamDetails makeMatamExam();
     };

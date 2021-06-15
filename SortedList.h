@@ -54,7 +54,7 @@ namespace mtm
         int length();
 
         template <class Condition>
-        SortedList<T>& filter(Condition condition) const;
+        SortedList<T> filter(Condition condition) const;
 
         template <class Function>
         SortedList<T> apply(Function function) const;
@@ -326,10 +326,10 @@ namespace mtm
 
     template <class T>
     template <class Condition>
-    SortedList<T>& SortedList<T>::filter(Condition condition) const
+    SortedList<T> SortedList<T>::filter(Condition condition) const
     {
         Node current_node = head;
-        SortedList<T>& new_list = SortedList<T>();
+        SortedList<T> new_list = SortedList<T>();
         if(size == 0)
         {
             return new_list;

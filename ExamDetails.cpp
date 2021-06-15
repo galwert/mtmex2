@@ -65,13 +65,26 @@ namespace mtm
         return this->test_month<exam_details.test_month;
 
     }
-    std::ostream& operator<<(std::ostream& os, const ExamDetails& examDetails)
+    std::ostream& operator<<(std::ostream& os, const ExamDetails& exam_details)
     {
-        os << "Course Number: "<<examDetails.course_number<<endl;
-        os << "Time: "<<examDetails.test_day<<"."<<examDetails.test_month;
-        os<< " at "<<(int)examDetails.test_hour<<":"<<60*(examDetails.test_hour-(int)examDetails.test_hour)<<endl;
-        os<<"Duration: "<<examDetails.length<<":00"<<endl;
-        os<<"Zoom Link: "<<examDetails.link<<endl;
+        bool time_zero = false;
+        if(60*(exam_details.test_hour-(int)exam_details.test_hour) == 0)
+        {
+            time_zero = true;
+        }
+        os << "Course Number: "<<exam_details.course_number<<endl;
+        os << "Time: "<<exam_details.test_day<<"."<<exam_details.test_month;
+        if(!time_zero)
+        {
+            os << " at " << (int) exam_details.test_hour << ":"
+               << 60 * (exam_details.test_hour - (int) exam_details.test_hour) << endl;
+        }
+        else
+        {
+            os << " at " << (int) exam_details.test_hour << ":00" << endl;
+        }
+        os<<"Duration: "<<exam_details.length<<":00"<<endl;
+        os<<"Zoom Link: "<<exam_details.link<<endl;
 
         return os;
     }
