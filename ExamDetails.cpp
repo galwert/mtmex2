@@ -11,6 +11,21 @@ namespace mtm
     ExamDetails::ExamDetails(int course_number, int test_month, int test_day,
                              double test_hour,int length, std::string&& link)
     {
+        if(test_month < 1 || test_month > 12 || test_day < 1 || test_day > 30)
+        {
+            throw ExamDetails::InvalidDateException();
+        }
+
+        if((int)test_hour < 0 || (int)test_hour > 23)
+        {
+            throw ExamDetails::InvalidTimeException();
+        }
+        int hour_with_minutes = (int)(test_hour*10);
+        if(hour_with_minutes % 10 != 0 && hour_with_minutes % 10 != 5)
+        {
+            throw ExamDetails::InvalidTimeException();
+        }
+
         this->length=length;
         this->course_number=course_number;
         this->test_day=test_day;
@@ -18,11 +33,7 @@ namespace mtm
         this->test_hour=test_hour;
         this->link=link;
     }
-    /*ExamDetails::~ExamDetails()
-    {
-        delete[] this->link.data();
-        delete this;
-    }*/
+
     ExamDetails::ExamDetails(const ExamDetails& exam_details)
     {
         this->length=exam_details.length;
@@ -32,17 +43,6 @@ namespace mtm
         this->test_hour=exam_details.test_hour;
         this->link=exam_details.link;
     }
-
-    /*ExamDetails& ExamDetails::operator=(const ExamDetails& exam_details)=default
-    {
-        this->length=exam_details.length;
-        this->course_number=exam_details.course_number;
-        this->test_day=exam_details.test_day;
-        this->test_month=exam_details.test_month;
-        this->test_hour=exam_details.test_hour;
-        this->link=exam_details.link;
-        return *this;
-    }*/
 
     std::string ExamDetails::getLink() const
     {
@@ -75,6 +75,7 @@ namespace mtm
 
         return os;
     }
+
     ExamDetails ExamDetails::makeMatamExam()
     {
         return ExamDetails(234124, 7, 28, (double)13, 3, (std::string &&) "https://tinyurl.com/59hzps6m");

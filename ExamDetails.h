@@ -15,7 +15,10 @@ namespace mtm
         int length;
         std::string link;
 
-    public:
+        class InvalidDateException{};
+        class InvalidTimeException{};
+        class InvalidArgException {};
+
         ExamDetails(int course_number, int test_month, int test_day,
                     double test_hour, int length, std::string &&link = std::string());
 
