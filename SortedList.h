@@ -74,7 +74,8 @@ namespace mtm
     }
 
     template<class T>
-    SortedList<T>::const_iterator::const_iterator(const SortedList<T>::Node node_to_be_head) : current_node(node_to_be_head)
+    SortedList<T>::const_iterator::const_iterator(const SortedList<T>::Node node_to_be_head)
+                : current_node(node_to_be_head)
     {
     }
 
