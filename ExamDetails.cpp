@@ -2,6 +2,32 @@
 #include <ostream>
 #include <utility>
 
+const int MIN_MONTH = 1;
+const int MAX_MONTH = 12;
+const int MIN_DAY = 1;
+const int MAX_DAY = 30;
+const int MIN_HOUR = 0;
+const int MAX_HOUR = 23;
+const int TEN = 10;
+const int HALF = 5;
+const int THIRTY = 30;
+
+const int FULL_HOUR = 60;
+const std::string COURSE_NUMBER_TEXT = "Course Number: ";
+const std::string TIME_TEXT = "Time: ";
+const std::string AT_TEXT = " at ";
+const std::string COLON =  ":";
+const std::string ZERO_MINUTES = ":00";
+const std::string DURATION_TEXT = "Duration: ";
+const std::string ZOOM_LINK_TEXT = "Zoom Link: ";
+
+const std::string DEFAULT_ZOOM_LINK = "https://tinyurl.com/59hzps6m";
+const int DEFAULT_COURSE_NUMBER = 234124;
+const int DEFAULT_MONTH = 7;
+const int DEFAULT_DAY = 28;
+const int DEFAULT_HOUR = 13;
+const int DEFAULT_LENGTH = 3;
+
 namespace mtm
 {
     using std::cout;
@@ -11,17 +37,17 @@ namespace mtm
     ExamDetails::ExamDetails(int course_number, int test_month, int test_day,
                              double test_hour,int length, std::string&& link)
     {
-        if(test_month < 1 || test_month > 12 || test_day < 1 || test_day > 30)
+        if(test_month < MIN_MONTH || test_month > MAX_MONTH || test_day < MIN_DAY || test_day > MAX_DAY)
         {
             throw ExamDetails::InvalidDateException();
         }
 
-        if((int)test_hour < 0 || (int)test_hour > 23)
+        if((int)test_hour < MIN_HOUR || (int)test_hour > MAX_HOUR)
         {
             throw ExamDetails::InvalidTimeException();
         }
-        int hour_with_minutes = (int)(test_hour*10);
-        if(hour_with_minutes % 10 != 0 && hour_with_minutes % 10 != 5)
+        int hour_with_minutes = (int)(test_hour*TEN);
+        if(hour_with_minutes % TEN != 0 && hour_with_minutes % TEN != HALF)
         {
             throw ExamDetails::InvalidTimeException();
         }
@@ -54,7 +80,7 @@ namespace mtm
     }
     int ExamDetails::operator-(const ExamDetails& exam_details) const
     {
-        return (this->test_month-exam_details.test_month)*30+this->test_day-exam_details.test_day;
+        return (this->test_month-exam_details.test_month)*THIRTY+this->test_day-exam_details.test_day;
     }
     bool ExamDetails::operator<(const ExamDetails& exam_details) const
     {
@@ -68,29 +94,30 @@ namespace mtm
     std::ostream& operator<<(std::ostream& os, const ExamDetails& exam_details)
     {
         bool time_zero = false;
-        if(60*(exam_details.test_hour-(int)exam_details.test_hour) == 0)
+        if(FULL_HOUR*(exam_details.test_hour-(int)exam_details.test_hour) == 0)
         {
             time_zero = true;
         }
-        os << "Course Number: "<<exam_details.course_number<<endl;
-        os << "Time: "<<exam_details.test_day<<"."<<exam_details.test_month;
+        os << COURSE_NUMBER_TEXT <<exam_details.course_number<<endl;
+        os << TIME_TEXT <<exam_details.test_day<<"."<<exam_details.test_month;
         if(!time_zero)
         {
-            os << " at " << (int) exam_details.test_hour << ":"
-               << 60 * (exam_details.test_hour - (int) exam_details.test_hour) << endl;
+            os << AT_TEXT << (int) exam_details.test_hour << COLON
+               << FULL_HOUR * (exam_details.test_hour - (int) exam_details.test_hour) << endl;
         }
         else
         {
-            os << " at " << (int) exam_details.test_hour << ":00" << endl;
+            os << AT_TEXT << (int) exam_details.test_hour << ZERO_MINUTES << endl;
         }
-        os<<"Duration: "<<exam_details.length<<":00"<<endl;
-        os<<"Zoom Link: "<<exam_details.link<<endl;
+        os<<DURATION_TEXT<<exam_details.length<<ZERO_MINUTES<<endl;
+        os<<ZOOM_LINK_TEXT<<exam_details.link<<endl;
 
         return os;
     }
 
     ExamDetails ExamDetails::makeMatamExam()
     {
-        return ExamDetails(234124, 7, 28, (double)13, 3, (std::string &&) "https://tinyurl.com/59hzps6m");
+        return ExamDetails(DEFAULT_COURSE_NUMBER, DEFAULT_MONTH, DEFAULT_DAY, (double)DEFAULT_HOUR, DEFAULT_LENGTH,
+                           (std::string &&) DEFAULT_ZOOM_LINK);
     }
 }
