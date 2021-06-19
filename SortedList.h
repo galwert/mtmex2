@@ -40,7 +40,7 @@ namespace mtm
         public:
             const_iterator(const SortedList<T>::const_iterator &iterator_to_copy);
             const_iterator& operator= (const const_iterator &iterator_to_assign);
-            void operator++();
+            const_iterator operator++();
             bool operator==(const const_iterator &iterator1) const;
             const T operator*();
         };
@@ -94,7 +94,7 @@ namespace mtm
     }
 
     template<class T>
-    void SortedList<T>::const_iterator::operator++()
+    typename SortedList<T>::const_iterator SortedList<T>::const_iterator::operator++()
     {
         if (current_node == nullptr)
         {
@@ -102,6 +102,8 @@ namespace mtm
         }
 
         current_node = current_node->next;
+
+        return *this;
     }
 
     template<class T>
@@ -113,6 +115,10 @@ namespace mtm
     template<class T>
     const T SortedList<T>::const_iterator::operator*()
     {
+        if(current_node == nullptr)
+        {
+            throw std::out_of_range(OUT_OF_RANGE_ERROR);
+        }
         return current_node->data;
     }
 

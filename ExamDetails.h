@@ -17,7 +17,7 @@ namespace mtm
 
         class InvalidDateException{};
         class InvalidTimeException{};
-        class InvalidArgException {};
+        class InvalidArgsException {};
 
         ExamDetails(int course_number, int test_month, int test_day,
                     double test_hour, int length, std::string &&link = std::string());
