@@ -38,6 +38,7 @@ namespace mtm
             const_iterator(const SortedList<T>::Node node_to_be_head);
 
         public:
+            ~const_iterator() = default;
             const_iterator(const SortedList<T>::const_iterator &iterator_to_copy);
             const_iterator& operator= (const const_iterator &iterator_to_assign);
             const_iterator operator++();
