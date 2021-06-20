@@ -42,7 +42,7 @@ namespace mtm
             throw ExamDetails::InvalidDateException();
         }
 
-        if((int)test_hour < MIN_HOUR || (int)test_hour > MAX_HOUR)
+        if((int)test_hour < MIN_HOUR || (int)test_hour > MAX_HOUR || length <= 0)
         {
             throw ExamDetails::InvalidTimeException();
         }
