@@ -5,6 +5,25 @@
 #include <string>
 #include "stdlib.h"
 
+/**
+* Generic List Container
+*
+* Implements a list container type.
+* The list has an internal iterator for external use.
+*
+* The following functions are available:
+*   insert		- Adds an element to the list, by order.
+*   remove		- Deletes an existing element from the list.
+*   length		- Returning the list's size.
+*   filter		- Creates a new list and puts into it only the
+*                 elements of the list which are accepted by the predicate given.
+*   apply	    - Creates a new list which contains the result for every element of the first list,
+*                 when applied to the function given as a parameter.
+*   begin		- returns a const iterator to the first element.
+*   end  	    - returns a const iterator to the end of the list.
+*/
+
+
 namespace mtm
 {
     const std::string OUT_OF_RANGE_ERROR = "End of list";
@@ -50,17 +69,61 @@ namespace mtm
         ~SortedList();
         SortedList(const SortedList<T> &list);
         SortedList<T>& operator= (const SortedList<T> &list);
+
+        /**
+        * insert: Adds an element to the list, by order.
+        *
+        * @param new_data - data to be added to the list.
+        */
         void insert(const T& new_data);
+
+        /**
+        * remove: Deletes an existing element from the list.
+        *
+        * @param iterator - iterator to the element to remove.
+        */
         void remove(typename SortedList<T>::const_iterator iterator);
+
+        /**
+        * remove: Deletes an existing element from the list.
+        *
+        * @return
+        * 	the size of the list.
+        */
         int length();
 
+        /**
+        * filter: Creates a new list and puts into it only the
+        *         elements of the list which are accepted by the predicate given.
+        * @return
+        * 	a new list with the filtered elements.
+        */
         template <class Condition>
         SortedList<T> filter(Condition condition) const;
 
+        /**
+        * apply: Creates a new list which contains the result for every element of the first list,
+        *        when applied to the function given as a parameter.
+        * @return
+        * 	a new list with the elements after being applied to the give function.
+        */
         template <class Function>
         SortedList<T> apply(Function function) const;
 
+        /**
+        * apply: returns a const iterator to the first element.
+        *
+        * @return
+        * 	an iterator to the first element of the list.
+        */
         const_iterator begin();
+
+        /**
+        * apply: returns a const iterator to the end of the list.
+        *
+        * @return
+        * 	an iterator to the end of the list.
+        */
         const_iterator end();
     };
 
