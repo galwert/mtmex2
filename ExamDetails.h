@@ -28,16 +28,34 @@ namespace mtm
 
         ExamDetails &operator=(const ExamDetails &exam_details) = default;
 
+        /**
+        * getLink: returns the link to the zoom meeting.
+        *
+        * @return
+        * 	a string with the link to the zoom meeting.
+        */
         std::string getLink() const;
 
         bool operator<(const ExamDetails &exam_details) const;
 
+        /**
+        * setLink: sets a new link to the current exam.
+        *
+        * @param
+        * 	link1 - the link to set.
+        */
         void setLink(std::string link1);
 
         int operator-(const ExamDetails &exam_details) const;
 
         friend std::ostream &operator<<(std::ostream &os, const ExamDetails &exam_details);
 
+        /**
+        * makeMatamExam: sets a new matam exam.
+        *
+        * @return
+        * 	a new exam with matam's details.
+        */
         static ExamDetails makeMatamExam();
     };
 }
