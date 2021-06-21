@@ -49,10 +49,8 @@ namespace mtm
         {
             friend class SortedList<T>;
 
-        public:
-            Node current_node;
-
         private:
+            Node current_node;
             const_iterator();
             const_iterator(const SortedList<T>::Node node_to_be_head);
 
